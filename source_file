@@ -1,0 +1,16 @@
+Main.java
+ManageImages/Album.java
+ManageImages/Category.java
+ManageImages/Image.java
+UserInterface/ActionListener/EditCategoryListener.java
+UserInterface/ActionListener/UpdateCategoryListener.java
+UserInterface/ActionListener/AddImageListener.java
+UserInterface/ActionListener/RemoveCategoryListener.java
+UserInterface/ActionListener/NewCategoryListener.java
+UserInterface/ActionListener/CreateCategoryListener.java
+UserInterface/ActionListener/ResetAlbumListener.java
+UserInterface/Views/AlbumFrame.java
+UserInterface/Views/CategoryFormInputs.java
+UserInterface/Views/CategoryPanel.java
+UserInterface/Views/ImagesPreview.java
+Exceptions/NotAcceptDoubleException.java
