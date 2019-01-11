@@ -1,6 +1,7 @@
 package UserInterface.Views;
 
 import ManageImages.*;
+import UserInterface.ActionListener.*;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -18,16 +19,6 @@ public class ImagesPreview extends JPanel {
 		this.category_id = category_id;
 		this.album = album;
 		this.drawPreview();
-	}
-
-	private BufferedImage readImage(String path) {
-		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File(path));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		return img;
 	}
 
 	public void refresh() {
@@ -65,9 +56,20 @@ public class ImagesPreview extends JPanel {
 		if(images.length > 0) {
 			JButton see_slideshow = new JButton(">>");
 			see_slideshow.setSize(80, 80);
+			see_slideshow.addActionListener(new SeeSlideshowListener(this.album, this.category_id));
 			this.add(see_slideshow, BorderLayout.EAST);
 		}
 
 		this.add(images_list, BorderLayout.WEST);
+	}
+
+	private BufferedImage readImage(String path) {
+		BufferedImage img = null;
+		try {
+		    img = ImageIO.read(new File(path));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		return img;
 	}
 }

@@ -9,8 +9,10 @@ UserInterface/ActionListener/RemoveCategoryListener.java
 UserInterface/ActionListener/NewCategoryListener.java
 UserInterface/ActionListener/CreateCategoryListener.java
 UserInterface/ActionListener/ResetAlbumListener.java
+UserInterface/ActionListener/SeeSlideshowListener.java
 UserInterface/Views/AlbumFrame.java
 UserInterface/Views/CategoryFormInputs.java
 UserInterface/Views/CategoryPanel.java
 UserInterface/Views/ImagesPreview.java
+UserInterface/Views/Slideshow.java
 Exceptions/NotAcceptDoubleException.java

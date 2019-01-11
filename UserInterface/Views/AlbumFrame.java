@@ -25,10 +25,12 @@ public class AlbumFrame extends JFrame {
 
 		JMenuItem save = new JMenuItem("Salva");
 		save.addActionListener(new SaveOnFileListener(myAlbum, this));
-		JMenuItem reset = new JMenuItem("Resetta album");
-		reset.addActionListener(new ResetAlbumListener(myAlbum, this));
+
+		// TODO fix
+		// JMenuItem reset = new JMenuItem("Resetta album");
+		// reset.addActionListener(new ResetAlbumListener(myAlbum, this));
 		menu_general.add(save);
-		menu_general.add(reset);
+		// menu_general.add(reset);
 
 		JMenuItem menuItemCreate = new JMenuItem("Crea");
 		menu_cat.add(menuItemCreate);

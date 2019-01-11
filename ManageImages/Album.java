@@ -37,9 +37,10 @@ public class Album
 
 	public Boolean updateCategoryName(int id, String new_name) {
 		Category cat_to_change = findCategoryById(id);
-		if(categoryExist(new_name) || cat_to_change == null) {
+		int ghost_category_id = categoryExist(new_name);
+		if(( ghost_category_id != id && ghost_category_id != -1) || cat_to_change == null) {
 			return false;
-		} else {
+		} else { 
 			cat_to_change.setName(new_name);
 			return true; 
 		}
@@ -56,7 +57,7 @@ public class Album
 	}
 
 	public int createCategory(String name) {
-		if(categoryExist(name)) {
+		if(categoryExist(name) != -1) { // TODO constantize it
 			return -1;
 		}
 		Category cat_to_add = new Category(name, this.createId());
@@ -92,13 +93,18 @@ public class Album
 		}
 	}
 
-	public Boolean categoryExist(String cat_to_search_name) {
+	public Integer categoryExist(String cat_to_search_name) {
 		for(Category c: this.category_list) {
 			if (c.getName().equals(cat_to_search_name)) {
-				return true;
+				return c.getId();
 			}
 		}
-		return false;
+		return -1;
+	}
+
+	public void updateCategoryDescription(int category_id, String new_name) {
+		Category c = this.findCategoryById(category_id);
+		c.setDescription(new_name);
 	}
 
 	public void saveOnFile() throws IOException {

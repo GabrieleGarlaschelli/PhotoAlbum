@@ -7,6 +7,7 @@ public class Category
 						implements Serializable {
 	private ArrayList<Image> image_list;
 	private String name;
+	private String description;
 	private Boolean accept_doubles;
 	private int id;
 
@@ -32,8 +33,16 @@ public class Category
 		return this.name;
 	}
 
-	public void setName(String new_name) {
+	protected void setName(String new_name) {
 		this.name = new_name;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String new_name) {
+		this.description = new_name;
 	}
 
 	public Boolean acceptDoubles() {

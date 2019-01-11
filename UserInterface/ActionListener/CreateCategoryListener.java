@@ -19,7 +19,7 @@ public class CreateCategoryListener
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		CategoryFormInputs cat_form = new CategoryFormInputs(null, this.album, null, "Nuova Categoria", this.album_panel, this.album_frame);
+		CategoryFormInputs cat_form = new CategoryFormInputs(null, this.album, null, null, "Nuova Categoria", this.album_panel, this.album_frame);
 		cat_form.setButtonListenerToNew();
 	}
 }

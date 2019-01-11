@@ -9,19 +9,22 @@ public class CategoryFormInputs extends JFrame {
 
 	private JButton save_button;
 	private JTextField name_texfield;
+	private JTextField description_texfield;
 	private JCheckBox di_check;
-	private JLabel label_on_main_view; // only for update
+	private JLabel name_label; // only for update
+	private JLabel description_label; // only for update
 	private Category current_cat; // only for update
 	private Album album; 
 	private JPanel album_panel; // only for create
 	private AlbumFrame album_frame; // only for create
 
-	public CategoryFormInputs(Category current_cat, Album album, JLabel label_on_main_view, String frame_name, JPanel album_panel, AlbumFrame album_frame) {
+	public CategoryFormInputs(Category current_cat, Album album, JLabel name_label, JLabel description_label, String frame_name, JPanel album_panel, AlbumFrame album_frame) {
 		super(frame_name);
 
 		this.current_cat = current_cat; 
 		this.album = album;
-		this.label_on_main_view = label_on_main_view;
+		this.name_label = name_label;
+		this.description_label = description_label;
 		this.album_panel = album_panel;
 		this.album_frame = album_frame;
 
@@ -36,7 +39,7 @@ public class CategoryFormInputs extends JFrame {
 
 		// name field
 		JPanel name_panel = new JPanel(new FlowLayout());
-		JLabel name_label = new JLabel("Nome: ");
+		name_label = new JLabel("Nome: ");
 
 		String precompile = "";
 		if(current_cat != null) {
@@ -45,6 +48,18 @@ public class CategoryFormInputs extends JFrame {
 		name_texfield = new JTextField(precompile, 30);
 		name_panel.add(name_label);
 		name_panel.add(name_texfield);
+
+		// description panel
+		JPanel description_panel = new JPanel(new FlowLayout());
+		description_label = new JLabel("Descrizione: ");
+
+		precompile = "";
+		if(current_cat != null) {
+			precompile = current_cat.getDescription();
+		}
+		description_texfield = new JTextField(precompile, 30);
+		description_panel.add(description_label);
+		description_panel.add(description_texfield);
 
 		// want double
 		Boolean want_double = false;
@@ -61,6 +76,7 @@ public class CategoryFormInputs extends JFrame {
 		save_panel.add(save_button);
 
 		form_panel.add(name_panel);
+		form_panel.add(description_panel);
 		form_panel.add(double_image_check_panel);
 		form_panel.add(save_panel);
 		align_panel.add(form_panel, BorderLayout.WEST);
@@ -71,10 +87,10 @@ public class CategoryFormInputs extends JFrame {
 	}
 
 	public void setButtonListenerToEdit() {
-		save_button.addActionListener(new UpdateCategoryListener(this, current_cat, album, label_on_main_view, name_texfield, di_check));
+		save_button.addActionListener(new UpdateCategoryListener(this, current_cat, album, name_label, description_label, name_texfield, description_texfield, di_check));
 	}
 
 	public void setButtonListenerToNew() {
-		save_button.addActionListener(new NewCategoryListener(this, album_panel, album, name_texfield, di_check, album_frame));
+		save_button.addActionListener(new NewCategoryListener(this, album_panel, album, name_texfield, description_texfield, di_check, album_frame));
 	}
 }

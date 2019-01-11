@@ -27,13 +27,22 @@ public class CategoryPanel extends JPanel {
 
 		header_panel.add(label_panel, BorderLayout.WEST);
 
+		JPanel description_panel = new JPanel(new FlowLayout());
+		String description = current_cat.getDescription() == null ? "" : current_cat.getDescription().toString();
+		JLabel description_label = new JLabel("<html>" + description + "</html>");
+		description_label.setPreferredSize(new Dimension(300, 100));
+		description_panel.add(description_label);
+		description_panel.setPreferredSize(new Dimension(300, 100));
+
+		header_panel.add(description_panel, BorderLayout.EAST);
+
 		// images preview
 		JPanel body_panel = new JPanel(new BorderLayout());
 		ImagesPreview ip = new ImagesPreview(category_id, album);
 		body_panel.add(ip, BorderLayout.WEST);
 
 		add_image_button.addActionListener(new AddImageListener(ip, category_id, album, main_frame));
-		mod_button.addActionListener(new EditCategoryListener(category_id, album, label));
+		mod_button.addActionListener(new EditCategoryListener(category_id, album, label, description_label));
 		delete_button.addActionListener(new RemoveCategoryListener(category_id, album, this, sep, main_frame));
 
 		this.add(header_panel, BorderLayout.NORTH);
