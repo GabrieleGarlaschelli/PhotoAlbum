@@ -14,20 +14,20 @@ public class Main {
 
 		Runtime.getRuntime().addShutdownHook(new SaveThread(myAlbum));
 		
-		try {
-			myAlbum.createCategory("Il mio compleanno");
-			myAlbum.createCategory("la mia famiglia");
-			myAlbum.createCategory("I miei amici");
-			myAlbum.createCategory("Immagini private");
-			myAlbum.createCategory("Lavoro");
-			myAlbum.createCategory("Sito");
-			myAlbum.addImageToCategory("Il mio compleanno", "./download.png");
-			myAlbum.addImageToCategory("la mia famiglia", "./download.png");
-			myAlbum.addImageToCategory("I miei amici", "./download.png");
-			myAlbum.saveOnFile();
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
+		// try {
+		// 	myAlbum.createCategory("Il mio compleanno");
+		// 	myAlbum.createCategory("la mia famiglia");
+		// 	myAlbum.createCategory("I miei amici");
+		// 	myAlbum.createCategory("Immagini private");
+		// 	myAlbum.createCategory("Lavoro");
+		// 	myAlbum.createCategory("Sito");
+		// 	myAlbum.addImageToCategory("Il mio compleanno", "./download.png");
+		// 	myAlbum.addImageToCategory("la mia famiglia", "./download.png");
+		// 	myAlbum.addImageToCategory("I miei amici", "./download.png");
+		// 	myAlbum.saveOnFile();
+		// } catch(Exception ex) {
+		// 	ex.printStackTrace();
+		// }
 
 		AlbumFrame f = new AlbumFrame("PhotoAlbum", myAlbum);
 

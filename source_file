@@ -1,6 +1,7 @@
 Main.java
 ManageImages/Album.java
 ManageImages/Category.java
+ManageImages/PasswordCategory.java
 ManageImages/Image.java
 UserInterface/ActionListener/EditCategoryListener.java
 UserInterface/ActionListener/UpdateCategoryListener.java
@@ -16,3 +17,4 @@ UserInterface/Views/CategoryPanel.java
 UserInterface/Views/ImagesPreview.java
 UserInterface/Views/Slideshow.java
 Exceptions/NotAcceptDoubleException.java
+Utils/ImageIterator.java

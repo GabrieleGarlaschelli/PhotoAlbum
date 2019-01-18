@@ -6,13 +6,15 @@ import java.io.*;
 
 public class Album 
 				implements Serializable {
+
+	private final int INTIAL_LENGTH = 10;
 	private ArrayList<Category> category_list;
 	private int last_used_id; 
 	private static final String RECOVERY_PATH = "./data/recovery.dat";
 
 
 	public Album() {
-		category_list = new ArrayList<Category>(10); // TODO constantize it
+		category_list = new ArrayList<Category>(INTIAL_LENGTH); // TODO constantize it
 	}
 
 	public int getCategoriesLength() {
@@ -61,6 +63,15 @@ public class Album
 			return -1;
 		}
 		Category cat_to_add = new Category(name, this.createId());
+		category_list.add(cat_to_add);
+		return cat_to_add.getId(); 
+	}
+
+	public int createCategory(String name, String password) { // for password category
+		if(categoryExist(name) != -1) { // TODO constantize it
+			return -1;
+		}
+		PasswordCategory cat_to_add = new PasswordCategory(name, this.createId(), password);
 		category_list.add(cat_to_add);
 		return cat_to_add.getId(); 
 	}

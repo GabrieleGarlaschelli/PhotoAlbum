@@ -13,13 +13,6 @@ public class Category
 
 	// Constructors
 
-	protected Category(String name) {
-		image_list = new ArrayList<Image>(10); // TODO constantize it
-		this.name = name;
-		this.accept_doubles = false; // TODO constantize it
-		this.id = -1; // TODO constantize it
-	}
-
 	protected Category(String name, int id) {
 		image_list = new ArrayList<Image>(10); // TODO constantize it
 		this.name = name;
@@ -58,6 +51,18 @@ public class Category
 	}
 
 	// methods
+
+	public String getImagePathAt(int index) {
+		return image_list.get(index).getPath();
+	}
+
+	public Boolean isPasswordCategory() {
+		return false;
+	}
+
+	public int imagesNumber() {
+		return image_list.size();
+	}
 
 	public String[] getImagesPath() {
 		String paths[] = new String[image_list.size()];
@@ -101,10 +106,6 @@ public class Category
 	}
 
 	protected void removeImage(Image image_to_remove) { 
-		// TODO
-	}
-
-	protected void writeOnFile(String file_path) {
 		// TODO
 	}
 
