@@ -14,10 +14,11 @@ public class NewCategoryListener
 	private JTextField description_texfield;
 	private JCheckBox di_check;
 	private JCheckBox with_pass_check; 
+	private JPasswordField password_text;
 	private JFrame form;
 	private AlbumFrame album_frame;
 
-	public NewCategoryListener(JFrame form, JPanel album_panel, Album album, JTextField name_texfield, JTextField description_texfield, JCheckBox di_check, JCheckBox with_pass_check, AlbumFrame album_frame) {
+	public NewCategoryListener(JFrame form, JPanel album_panel, Album album, JTextField name_texfield, JTextField description_texfield, JPasswordField password_field, JCheckBox di_check, JCheckBox with_pass_check, AlbumFrame album_frame) {
 		this.album = album;
 		this.album_panel = album_panel;
 		this.form = form;
@@ -27,6 +28,7 @@ public class NewCategoryListener
 		this.album_frame = album_frame;
 		this.description_texfield = description_texfield;
 		this.with_pass_check = with_pass_check;
+		this.password_text = password_field;
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -35,7 +37,7 @@ public class NewCategoryListener
 			int id = -1;
 
 			if(with_pass_check.isSelected()) {
-				String password = "";
+				char[] password = password_text.getPassword();
 				id = this.album.createCategory(category_name, password);
 			} else {
 				id = this.album.createCategory(category_name);

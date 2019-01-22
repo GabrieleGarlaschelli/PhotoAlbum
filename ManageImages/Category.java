@@ -100,6 +100,10 @@ public class Category
 		return false; 
 	}
 
+	public boolean isPasswordCorrect(char[] input) { //useless
+		return true;
+	} 
+
 	@Override
 	public String toString() {
 		return this.name;

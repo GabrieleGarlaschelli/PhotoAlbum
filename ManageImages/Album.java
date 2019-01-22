@@ -11,6 +11,7 @@ public class Album
 	private ArrayList<Category> category_list;
 	private int last_used_id; 
 	private static final String RECOVERY_PATH = "./data/recovery.dat";
+	public static final String LOCK_IMAGE_PATH = "./data/lock.jpeg";
 
 
 	public Album() {
@@ -67,7 +68,7 @@ public class Album
 		return cat_to_add.getId(); 
 	}
 
-	public int createCategory(String name, String password) { // for password category
+	public int createCategory(String name, char[] password) { // for password category
 		if(categoryExist(name) != -1) { // TODO constantize it
 			return -1;
 		}

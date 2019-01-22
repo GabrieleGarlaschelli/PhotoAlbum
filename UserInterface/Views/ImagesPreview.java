@@ -38,19 +38,35 @@ public class ImagesPreview extends JPanel {
 		ManageImages.Category current_cat = this.album.findCategoryById(this.category_id);
 		String images[] = current_cat.getImagesPath();
 
-		// TODO set max number of image in preview
-		for(int i = 0; i<images.length; i++) {
-			JLabel label_with_image = new JLabel();
-			label_with_image.setSize(80, 80);
 
-			// TODO better incapsulate with try catch
-			// TODO label for no images
-			BufferedImage img = readImage(images[i]);
-			Image dimg = img.getScaledInstance(label_with_image.getWidth(), label_with_image.getHeight(), Image.SCALE_SMOOTH);
-			ImageIcon imageIcon = new ImageIcon(dimg);
+		if(!current_cat.isPasswordCategory()) {
+			// TODO set max number of image in preview
+			for(int i = 0; i<images.length; i++) {
+				JLabel label_with_image = new JLabel();
+				label_with_image.setSize(80, 80);
+	
+				// TODO better incapsulate with try catch
+				BufferedImage img = readImage(images[i]);
+				Image dimg = img.getScaledInstance(label_with_image.getWidth(), label_with_image.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imageIcon = new ImageIcon(dimg);
+	
+				label_with_image.setIcon(imageIcon);
+				images_list.add(label_with_image);
+			}
+		} else {
+			try {
+				JLabel label_with_image = new JLabel();
+				label_with_image.setSize(80, 80);
 
-			label_with_image.setIcon(imageIcon);
-			images_list.add(label_with_image);
+				BufferedImage img = readImage(Album.LOCK_IMAGE_PATH);
+				Image dimg = img.getScaledInstance(label_with_image.getWidth(), label_with_image.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon imageIcon = new ImageIcon(dimg);
+				
+				label_with_image.setIcon(imageIcon);
+				images_list.add(label_with_image);
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 
 		if(images.length > 0) {

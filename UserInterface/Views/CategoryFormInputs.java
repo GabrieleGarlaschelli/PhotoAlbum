@@ -19,7 +19,7 @@ public class CategoryFormInputs extends JFrame {
 	private JPanel album_panel; // only for create
 	private AlbumFrame album_frame; // only for create
 	private JCheckBox with_pass_check;
-	private JTextField password_text; 
+	private JPasswordField password_text; 
 
 	public CategoryFormInputs(Category current_cat, Album album, JLabel name_label, JLabel description_label, String frame_name, JPanel album_panel, AlbumFrame album_frame) {
 		super(frame_name);
@@ -36,10 +36,10 @@ public class CategoryFormInputs extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setPreferredSize(new Dimension(500, 300));
 
+		JPanel align_panel = new JPanel(new BorderLayout());
+
 		JPanel form_panel = new JPanel();
 		form_panel.setLayout(new BoxLayout(form_panel, BoxLayout.PAGE_AXIS));
-
-		JPanel align_panel = new JPanel(new BorderLayout());
 
 		// name field
 		JPanel name_panel = new JPanel(new FlowLayout());
@@ -90,11 +90,7 @@ public class CategoryFormInputs extends JFrame {
 		// password textfield
 		JPanel password_panel = new JPanel(new FlowLayout());
 		JLabel password_label = new JLabel("Password: ");
-		if(current_cat != null && current_cat.isPasswordCategory()) {
-			password_text = new JTextField("* * * * *", 30);
-		} else if (current_cat == null) {
-			password_text = new JTextField("", 30);
-		}
+		password_text = new JPasswordField(30);
 		password_panel.add(password_label);
 		password_panel.add(password_text);
 		password_panel.setVisible(false);
@@ -135,6 +131,6 @@ public class CategoryFormInputs extends JFrame {
 	}
 
 	public void setButtonListenerToNew() {
-		save_button.addActionListener(new NewCategoryListener(this, album_panel, album, name_texfield, description_texfield, di_check, with_pass_check, album_frame));
+		save_button.addActionListener(new NewCategoryListener(this, album_panel, album, name_texfield, description_texfield, password_text, di_check, with_pass_check, album_frame));
 	}
 }
