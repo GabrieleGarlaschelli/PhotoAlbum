@@ -4,9 +4,11 @@ import java.util.*;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import UserInterface.Views.*;
 
 public class Category 
 						implements Serializable {
+	private CategoryPanel panel;
 	private ArrayList<Image> image_list;
 	private String name;
 	private String description;
@@ -55,11 +57,23 @@ public class Category
 		return this.id;
 	}
 
+	public void setCategoryPanel(CategoryPanel panel) {
+		this.panel = panel;
+	}
+
 	protected void setAcceptDoubles(Boolean flag) {
 		this.accept_doubles = flag;
 	}
 
 	// methods
+
+	public void refreshPanel() {
+		this.panel.refresh();
+	}
+
+	public void removeOnView(AlbumFrame album_frame) {
+		this.panel.setVisible(false);
+	}
 
 	public String getImagePathAt(int index) {
 		return image_list.get(index).getPath();

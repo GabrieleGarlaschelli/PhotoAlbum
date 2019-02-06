@@ -29,6 +29,21 @@ public class RemoveImageListener
 	}
 
 	public void actionPerformed(ActionEvent event) {
+		if(event.getActionCommand() == "removed_istantanely") {
+			String current_image = iterator.currentImage();
+			if(current_image != null) {
+				album.removeImageFromCategory(category_id, current_image);
+			}
+
+			// refreshing a view
+			cat_panel.refresh();
+			image_preview.refresh();
+			iterator.refreshMaxImage();
+			next_image.doClick();
+			prev_image.doClick();
+			return;
+		}
+
 		Object[] options = { "Si", "No" };
 		int dialogResult = JOptionPane.showOptionDialog(null, "Sei sicuro di volere eliminare l'immagine?", "Eliminazione", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		if(dialogResult == JOptionPane.YES_OPTION) {

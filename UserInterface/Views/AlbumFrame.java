@@ -26,14 +26,12 @@ public class AlbumFrame extends JFrame {
 		JMenuItem save = new JMenuItem("Salva");
 		save.addActionListener(new SaveOnFileListener(myAlbum, this));
 
-		// TODO fix
-		// JMenuItem reset = new JMenuItem("Resetta album");
-		// reset.addActionListener(new ResetAlbumListener(myAlbum, this));
 		menu_general.add(save);
-		// menu_general.add(reset);
 
 		JMenuItem menuItemCreate = new JMenuItem("Crea");
+		JMenuItem menuItemMerge = new JMenuItem("Unisci Categorie");
 		menu_cat.add(menuItemCreate);
+		menu_cat.add(menuItemMerge);
 
 		menuBar.add(menu_general);
 		menuBar.add(menu_cat);
@@ -55,6 +53,7 @@ public class AlbumFrame extends JFrame {
 		}
 
 		menuItemCreate.addActionListener(new CreateCategoryListener(myAlbum, album_panel, this)); // i need to do this here cause i need the cat list container
+		menuItemMerge.addActionListener(new MergeCategoriesListener(myAlbum, this));
 
 		// scroll
 		JScrollPane scrollFrame = new JScrollPane(album_panel);
@@ -70,7 +69,6 @@ public class AlbumFrame extends JFrame {
 	}
 
 	public void removeCategoryPanel(CategoryPanel cat_panel, JSeparator sep) {
-		// System.out.println((Object)cat_panel);
 		album_panel.remove(sep);
 		album_panel.remove(cat_panel);
 		album_panel.revalidate();

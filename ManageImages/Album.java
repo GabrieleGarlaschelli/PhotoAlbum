@@ -82,8 +82,7 @@ public class Album
 		return cat_to_add.getId(); 
 	}
 
-	// TODO now is returning false both if category does not exist or if image is double
-	// do it with expection
+
 	public Boolean addImageToCategory(String cat_name, String path) throws NotAcceptDoubleException {
 		Category current_cat = this.findCategoryByName(cat_name);
 		if(current_cat != null) {
@@ -97,6 +96,22 @@ public class Album
 		}
 	}
 
+	public Boolean mergeCategories(String source_cat_name, String destination_cat_name) {
+		Category source = findCategoryByName(source_cat_name);
+		Category destination = findCategoryByName(destination_cat_name);
+
+		if(source == null || destination == null) {
+			return false;
+		}
+
+		String[] paths = source.getImagesPath();
+		for(int i = 0; i<paths.length; i += 1) {
+			destination.addImage(paths[i]);
+		}
+		
+		return true;
+	}
+
 	public Boolean addImageToCategory(int id, String path) throws NotAcceptDoubleException {
 		Category current_cat = this.findCategoryById(id);
 		if(current_cat != null) {
@@ -108,6 +123,22 @@ public class Album
 		} else {
 			return false;
 		}
+	}
+
+	public Boolean moveImage(int source_category_id, int destination_category_id, String path) {
+		Category source_cat = findCategoryById(source_category_id);
+		Category destination_cat = findCategoryById(destination_category_id);
+
+		if(source_cat == null || destination_cat == null) {
+			return false;
+		}
+
+		Boolean result = destination_cat.addImage(path);
+		if(result) {
+			source_cat.removeImage(path);
+		}
+
+		return result;
 	}
 
 	public Integer categoryExist(String cat_to_search_name) {

@@ -10,6 +10,7 @@ public class CategoryPanel extends JPanel {
 	private Album album;
 	private JSeparator sep;
 	private AlbumFrame main_frame;
+	private ImagesPreview ip;
 
 	public CategoryPanel(int category_id, Album album, JSeparator sep, AlbumFrame main_frame) {
 		this.category_id = category_id;
@@ -19,19 +20,13 @@ public class CategoryPanel extends JPanel {
 		this.draw();
 	}
 
-	public void refresh() {
-		this.removeAll();
-		this.draw();
-		this.revalidate();
-		this.repaint();
-	}
-
 	private void draw() {
 		this.setLayout(new BorderLayout());
 		JPanel header_panel = new JPanel(new BorderLayout());
 		JPanel label_panel = new JPanel(new FlowLayout());
 
 		Category current_cat = album.findCategoryById(category_id);
+		current_cat.setCategoryPanel(this);
 
 		JLabel label = new JLabel(current_cat.getName());
 		Font font = new Font("Courier", Font.BOLD,12);
@@ -66,7 +61,7 @@ public class CategoryPanel extends JPanel {
 
 		// images preview
 		JPanel body_panel = new JPanel(new BorderLayout());
-		ImagesPreview ip = new ImagesPreview(category_id, album, this);
+		ip = new ImagesPreview(category_id, album, this);
 		body_panel.add(ip, BorderLayout.WEST);
 
 		add_image_from_link_button.addActionListener(new AddImageListener(ip, category_id, album, main_frame, info, true));
@@ -76,5 +71,12 @@ public class CategoryPanel extends JPanel {
 
 		this.add(header_panel, BorderLayout.NORTH);
 		this.add(body_panel, BorderLayout.SOUTH);
+	}
+
+	public void refresh() {
+		this.removeAll();
+		this.draw();
+		this.revalidate();
+		this.repaint();
 	}
 }

@@ -3,6 +3,8 @@ package UserInterface.Views;
 import ManageImages.*;
 import UserInterface.ActionListener.*;
 import Utils.*;
+import Exceptions.*;
+import UserInterface.Component.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -52,36 +54,29 @@ public class Slideshow extends JFrame {
 		JPanel main_panel = new JPanel();
 		main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.LINE_AXIS));
 
-		// TODO menu (delete, move, visualizing the nth image)
 
 		JMenuBar menuBar = new JMenuBar();;
 		JMenu menu_cat = new JMenu("Azioni");
-		JMenuItem remove_image = new JMenuItem("Rimuovi Immagine");
+		JMenuItemRemove remove_image = new JMenuItemRemove("Rimuovi Immagine");
+		JMenuItem move_image = new JMenuItem("Sposta Immagine");
 
 		menu_cat.add(remove_image);
+		menu_cat.add(move_image);
 		menuBar.add(menu_cat);
 		this.setJMenuBar(menuBar);
 
 		// big image
-
 		JLabel big_label_with_image = new JLabel();
 		big_label_with_image.setSize(600, 500);
-
 		ImageIcon big_image_icon = new ImageIcon();
-		
-
-
 		big_image_icon = getImageIcon(iterator.currentImage(), big_label_with_image);
-
-
-
-
-
 		big_label_with_image.setIcon(big_image_icon);
 
+		//next image
 		JButton next_image = new JButton(">>");
 		next_image.setPreferredSize(new Dimension(50, 100));
 
+		//prev image
 		JButton prev_image = new JButton("<<");
 		prev_image.setPreferredSize(new Dimension(50, 100));
 
@@ -91,8 +86,6 @@ public class Slideshow extends JFrame {
 
 		prev_image.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				// BufferedImage prev_big_img = readImage(iterator.prevImage());
-				// Image prev_big_dmig = prev_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon prev_big_image_icon = getImageIcon(iterator.prevImage(), big_label_with_image);
 				big_label_with_image.setIcon(prev_big_image_icon);
 			}
@@ -100,27 +93,33 @@ public class Slideshow extends JFrame {
 
 		next_image.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				// BufferedImage next_big_img = readImage(iterator.nextImage());
-				// Image next_big_dmig = next_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon next_big_image_icon = getImageIcon(iterator.nextImage(), big_label_with_image);
 				big_label_with_image.setIcon(next_big_image_icon);
 			}
 		});
 
+		JFrame self = this;
 		remove_image.addActionListener(new RemoveImageListener(category_id, album, cat_panel, iterator, prev_image, next_image, image_preview));
-
-		// image list
-
-		// scroll
-		// JScrollPane scrollPanel = new JScrollPane(images_list);
-		// scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-  	// scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// scrollPanel.setBounds(100, 100, 100, 100);
-		// images_list.setAutoscrolls(true);
-		// main_panel.add(images_list);
-		// JPanel content_pane = new JPanel(new BorderLayout());
-		// content_pane.add(scrollPanel);
-		// this.setContentPane(content_pane);
+		move_image.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				String[] options_for_combo = album.getCategoriesName();
+				JComboBox<String> combo = new JComboBox<String>(options_for_combo);
+				String[] options = {"OK", "annulla"};
+				int selection = JOptionPane.showOptionDialog(null, combo, "Seleziona una categoria", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+				if (selection == 0) {
+				  String path = iterator.currentImage();
+					remove_image.removeIstantanely();
+					String category_name = (String)combo.getSelectedItem();
+					Category destination = album.findCategoryByName(category_name);
+					try {
+						album.addImageToCategory(destination.getId(), path);
+					} catch(NotAcceptDoubleException ex) {
+						JOptionPane.showMessageDialog(self, "La categoria non accetta immagini doppie", "error", JOptionPane.ERROR_MESSAGE);
+					}
+					destination.refreshPanel();
+				}
+			}
+		});
 
 		this.getContentPane().add(main_panel);
 		this.setVisible(true);

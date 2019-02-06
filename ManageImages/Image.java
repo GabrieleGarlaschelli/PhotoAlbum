@@ -6,10 +6,6 @@ class Image
 				implements Serializable {
 	private String file_path;
 
-	public Image() { 
-		// TODO remove when it's done
-	}
-
 	public Image(String file_path) {
 		this.file_path = file_path;
 	}
@@ -20,11 +16,6 @@ class Image
 
 	public void setPath(String path) {
 		this.file_path = file_path;
-	}
-
-	public Boolean writeOnFile() {
-		// TODO
-		return true;
 	}
 
 	@Override

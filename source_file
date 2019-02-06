@@ -12,10 +12,12 @@ UserInterface/ActionListener/CreateCategoryListener.java
 UserInterface/ActionListener/ResetAlbumListener.java
 UserInterface/ActionListener/SeeSlideshowListener.java
 UserInterface/ActionListener/RemoveImageListener.java
+UserInterface/ActionListener/MergeCategoriesListener.java
 UserInterface/Views/AlbumFrame.java
 UserInterface/Views/CategoryFormInputs.java
 UserInterface/Views/CategoryPanel.java
 UserInterface/Views/ImagesPreview.java
 UserInterface/Views/Slideshow.java
+UserInterface/Component/JMenuItemRemove.java
 Exceptions/NotAcceptDoubleException.java
 Utils/ImageIterator.java
