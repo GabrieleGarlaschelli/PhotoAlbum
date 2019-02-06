@@ -11,6 +11,7 @@ UserInterface/ActionListener/NewCategoryListener.java
 UserInterface/ActionListener/CreateCategoryListener.java
 UserInterface/ActionListener/ResetAlbumListener.java
 UserInterface/ActionListener/SeeSlideshowListener.java
+UserInterface/ActionListener/RemoveImageListener.java
 UserInterface/Views/AlbumFrame.java
 UserInterface/Views/CategoryFormInputs.java
 UserInterface/Views/CategoryPanel.java

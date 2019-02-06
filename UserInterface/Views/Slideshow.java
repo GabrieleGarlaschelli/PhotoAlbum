@@ -11,30 +11,72 @@ import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
 import java.util.*;
+import java.net.URL;
 
 public class Slideshow extends JFrame {
-	public Slideshow(int category_id, Album album) {
-		super("Slideshow");                     
+
+	private int category_id;
+	private Album album; 
+	private CategoryPanel cat_panel;
+	private ImagesPreview image_preview;
+	private ImageIterator image_iterator;
+
+	public Slideshow(int category_id, Album album, CategoryPanel cat_panel, ImagesPreview image_preview) {
+		super("Slideshow");
+		this.category_id = category_id;
+		this.album = album;
+		this.cat_panel = cat_panel;
+		this.image_preview = image_preview;
+		this.draw();
+	}
+
+	public void refresh() {
+		this.removeAll();
+		this.draw();
+		this.revalidate();
+		this.repaint();
+	}
+
+	private void draw() {                   
 		this.setSize(730, 520);
 		this.setLocation(120, 120);
 
+		ImageIterator iterator;
 		Category current_category = album.findCategoryById(category_id);
-		ImageIterator iterator = new ImageIterator(current_category);
+		if(image_iterator == null) {
+			iterator = new ImageIterator(current_category);
+		} else {
+			iterator = image_iterator;
+		}
 
 		JPanel main_panel = new JPanel();
 		main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.LINE_AXIS));
 
 		// TODO menu (delete, move, visualizing the nth image)
 
+		JMenuBar menuBar = new JMenuBar();;
+		JMenu menu_cat = new JMenu("Azioni");
+		JMenuItem remove_image = new JMenuItem("Rimuovi Immagine");
+
+		menu_cat.add(remove_image);
+		menuBar.add(menu_cat);
+		this.setJMenuBar(menuBar);
 
 		// big image
 
 		JLabel big_label_with_image = new JLabel();
 		big_label_with_image.setSize(600, 500);
 
-		BufferedImage big_img = readImage(iterator.currentImage());
-		Image big_dmig = big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon big_image_icon = new ImageIcon(big_dmig);
+		ImageIcon big_image_icon = new ImageIcon();
+		
+
+
+		big_image_icon = getImageIcon(iterator.currentImage(), big_label_with_image);
+
+
+
+
+
 		big_label_with_image.setIcon(big_image_icon);
 
 		JButton next_image = new JButton(">>");
@@ -49,21 +91,23 @@ public class Slideshow extends JFrame {
 
 		prev_image.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				BufferedImage prev_big_img = readImage(iterator.prevImage());
-				Image prev_big_dmig = prev_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
-				ImageIcon prev_big_image_icon = new ImageIcon(prev_big_dmig);
+				// BufferedImage prev_big_img = readImage(iterator.prevImage());
+				// Image prev_big_dmig = prev_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon prev_big_image_icon = getImageIcon(iterator.prevImage(), big_label_with_image);
 				big_label_with_image.setIcon(prev_big_image_icon);
 			}
 		});
 
 		next_image.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				BufferedImage next_big_img = readImage(iterator.nextImage());
-				Image next_big_dmig = next_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
-				ImageIcon next_big_image_icon = new ImageIcon(next_big_dmig);
+				// BufferedImage next_big_img = readImage(iterator.nextImage());
+				// Image next_big_dmig = next_big_img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon next_big_image_icon = getImageIcon(iterator.nextImage(), big_label_with_image);
 				big_label_with_image.setIcon(next_big_image_icon);
 			}
 		});
+
+		remove_image.addActionListener(new RemoveImageListener(category_id, album, cat_panel, iterator, prev_image, next_image, image_preview));
 
 		// image list
 
@@ -80,16 +124,40 @@ public class Slideshow extends JFrame {
 
 		this.getContentPane().add(main_panel);
 		this.setVisible(true);
-
 	}
 
-	private BufferedImage readImage(String path) {
+	private void refreshIterator(int index) {
+		Category current_category = album.findCategoryById(category_id);
+		this.image_iterator = new ImageIterator(current_category, index);
+	}
+
+	private BufferedImage readImage(String path) throws Exception {
 		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File(path));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
+		img = ImageIO.read(new File(path));
 		return img;
+	}
+
+	private ImageIcon getImageIcon(String path, JLabel big_label_with_image) {
+		ImageIcon big_image_icon = new ImageIcon();
+		Boolean raised_expection = false;
+		try {
+			BufferedImage img = readImage(path);
+			Image dimg = img.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
+			big_image_icon = new ImageIcon(dimg);
+		} catch(Exception ex) {
+			raised_expection = true;
+		}
+
+		if(raised_expection) {
+			try {
+				URL url = new URL(path);
+				Image image = ImageIO.read(url);
+				image = image.getScaledInstance(big_label_with_image.getWidth(), big_label_with_image.getHeight(), Image.SCALE_SMOOTH);
+				big_image_icon = new ImageIcon(image);
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}	
+		}
+		return big_image_icon;
 	}
 }

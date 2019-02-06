@@ -2,6 +2,8 @@ package ManageImages;
 
 import java.util.*;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Category 
 						implements Serializable {
@@ -9,6 +11,7 @@ public class Category
 	private String name;
 	private String description;
 	private Boolean accept_doubles;
+	private Date created_at;
 	private int id;
 
 	// Constructors
@@ -18,9 +21,15 @@ public class Category
 		this.name = name;
 		this.accept_doubles = false; // TODO constantize it
 		this.id = id;
+		this.created_at = new Date();
 	}
 
 	// setters and getters
+
+	public String getCreatedAt() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		return dateFormat.format(created_at);
+	}
 
 	public String getName() {
 		return this.name;
@@ -109,8 +118,18 @@ public class Category
 		return this.name;
 	}
 
-	protected void removeImage(Image image_to_remove) { 
-		// TODO
+	protected void removeImage(String path) { 
+		Image image_to_remove = getImageByPath(path);
+		image_list.remove(image_to_remove);
+	}
+
+	private Image getImageByPath(String path) {
+		for(Image i: this.image_list) { 
+			if (i.getPath().equals(path)) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 }

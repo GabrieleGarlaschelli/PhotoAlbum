@@ -59,6 +59,11 @@ public class Album
 		category_list.remove(c);
 	}
 
+	public void removeImageFromCategory(int category_id, String path) {
+		Category c = findCategoryById(category_id);
+		c.removeImage(path);
+	}
+
 	public int createCategory(String name) {
 		if(categoryExist(name) != -1) { // TODO constantize it
 			return -1;

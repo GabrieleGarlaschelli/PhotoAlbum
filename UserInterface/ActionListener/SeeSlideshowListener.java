@@ -10,10 +10,14 @@ public class SeeSlideshowListener
 							implements ActionListener {
 	private Album album; 
 	private int category_id;
+	private CategoryPanel cat_panel;
+	private ImagesPreview image_preview;
 
-	public SeeSlideshowListener(Album album, int category_id) {
+	public SeeSlideshowListener(Album album, int category_id, CategoryPanel cat_panel, ImagesPreview image_preview) {
 		this.album = album;
 		this.category_id = category_id;
+		this.cat_panel = cat_panel;
+		this.image_preview = image_preview;
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -38,7 +42,7 @@ public class SeeSlideshowListener
 					char [] pass = password_field.getPassword();
 					if(current_cat.isPasswordCorrect(pass)) {
 						insert_password_frame.setVisible(false);
-						Slideshow slideshow = new Slideshow(self.category_id, self.album);
+						Slideshow slideshow = new Slideshow(self.category_id, self.album, self.cat_panel, self.image_preview);
 					}
 				}
 			});
@@ -50,7 +54,7 @@ public class SeeSlideshowListener
 			insert_password_frame.add(align_panel);
 			insert_password_frame.setVisible(true);
 		} else {
-			Slideshow slideshow = new Slideshow(this.category_id, this.album);
+			Slideshow slideshow = new Slideshow(this.category_id, this.album, this.cat_panel, this.image_preview);
 		}
 
 		
